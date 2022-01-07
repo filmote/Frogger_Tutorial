@@ -1,0 +1,7 @@
+"title": "Frogger: Adding the Player's Frog",
+"type":"COURSE",
+"summary":"Add the players frog and move it based on player's input.",
+"tags":["Intermediate","Game"],
+"durationInMinutes": 10,
+"compileEntryPath":"Frogger.ino",
+"workFilePath":"ExampleCode/Frogger.ino"

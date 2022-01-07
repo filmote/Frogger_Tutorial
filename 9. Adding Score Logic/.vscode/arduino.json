@@ -1,0 +1,6 @@
+{
+    "board": "arduino:avr:leonardo",
+    "output": "../build",
+    "sketch": "Frogger.ino",
+    "port": "COM7"
+}

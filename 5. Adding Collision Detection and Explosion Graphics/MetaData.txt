@@ -1,0 +1,7 @@
+"title": "Frogger: Adding Collision Detection and Explosion Graphics",
+"type":"COURSE",
+"summary":"Add collision detection between the cars and frog and a simple explosion animation.",
+"tags":["Intermediate","Game"],
+"durationInMinutes": 10,
+"compileEntryPath":"Frogger.ino",
+"workFilePath":"ExampleCode/Frogger.ino"

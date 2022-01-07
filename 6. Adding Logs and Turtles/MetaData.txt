@@ -1,0 +1,7 @@
+"title": "Frogger: Adding Logs and Turtles",
+"type":"COURSE",
+"summary":"Add the logs and turtles to the game with simple movements and collision detection.",
+"tags":["Intermediate","Game"],
+"durationInMinutes": 10,
+"compileEntryPath":"Frogger.ino",
+"workFilePath":"ExampleCode/Frogger.ino"

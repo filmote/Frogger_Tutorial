@@ -1,0 +1,7 @@
+"title": "Frogger: Adding Score Logic",
+"type":"COURSE",
+"summary":"Add a game score.",
+"tags":["Intermediate","Game"],
+"durationInMinutes": 10,
+"compileEntryPath":"Frogger.ino",
+"workFilePath":"ExampleCode/Frogger.ino"

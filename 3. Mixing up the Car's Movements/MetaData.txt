@@ -1,0 +1,7 @@
+"title": "Frogger: Mixing up the Car's Movements",
+"type":"COURSE",
+"summary":"Add some random elements to the car's movements to make them less predictable.",
+"tags":["Intermediate","Game"],
+"durationInMinutes": 10,
+"compileEntryPath":"Frogger.ino",
+"workFilePath":"ExampleCode/Frogger.ino"

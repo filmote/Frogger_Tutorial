@@ -1,0 +1,7 @@
+"title": "Frogger: Adding Home Logic",
+"type":"COURSE",
+"summary":"Add the logic required for the frog to enter the home locations.",
+"tags":["Intermediate","Game"],
+"durationInMinutes": 10,
+"compileEntryPath":"Frogger.ino",
+"workFilePath":"ExampleCode/Frogger.ino"

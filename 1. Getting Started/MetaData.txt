@@ -1,0 +1,7 @@
+"title": "Frogger: Overview and Getting Started",
+"type":"COURSE",
+"summary":"Overview of the game and the pre-requisite skills required to complete the course",
+"tags":["Intermediate","Game"],
+"durationInMinutes": 5,
+"compileEntryPath":"Frogger.ino",
+"workFilePath":"ExampleCode/Frogger.ino"
