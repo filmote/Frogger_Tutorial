@@ -60,6 +60,9 @@ void loop() {
             ...
 ```
 
+> Your Turn: <br/>
+> Add home logic for the reamining positions.  These positions have `x` values of `63`, `87` and `112`.  As shown in the first two positions, we have accepted `x` values +/- ` to make it a little easier for the player.
+
 Immediately after a frog makes it home, a check of the `home[]` array is made to see if all positions are complete.  If so, a new variable, `homeFullCounter`, is set to a non-zero value to indicate that an animation should occur.
 
 ```cpp

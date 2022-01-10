@@ -29,6 +29,9 @@ Adding the ampersand in front of the variable names within a function tells the 
 
 But I hear you ask “why have an ampersand on car2 if we are not changing it?”.  Good question as the function would work exactly the same way with or without the ampersand.  Using a reference for an object or structure, rather than a copy, actually saves memory at runtime as the compiler does not need to copy the data but can just reuse the same memory locations.  On a device with minimal memory, this can become really important.  For now, remove the ampersand from the car2 variable and test the code to satisfy yourself that it works either way.
 
+> Your Turn: <br/>
+> When relaunching a vehicle, we can change its type randomly to mix that up a bit.  Valid vehicle values are `ObstacleTypes::Car` to `ObstacleTypes::Van` which equate to 0, 1 and 2.  Add a random type to the bottom of the `launchCar()` function.
+
 Now that we have a function to relaunch a car based on the location of its lane sharing pair, we need to change the existing logic to move them in pairs.  Again, a simple function can assist .. voila!
 
 ```cpp

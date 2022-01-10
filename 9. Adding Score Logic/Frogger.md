@@ -19,11 +19,13 @@ if (player.y < 59 || player.x > 47) {
     Sprites::drawOverwrite(25, 59, Numbers, scoreTmp / 10000);      scoreTmp = scoreTmp - ((scoreTmp / 10000) * 10000);
     Sprites::drawOverwrite(29, 59, Numbers, scoreTmp / 1000);       scoreTmp = scoreTmp - ((scoreTmp / 1000) * 1000);
     Sprites::drawOverwrite(33, 59, Numbers, scoreTmp / 100);        scoreTmp = scoreTmp - ((scoreTmp / 100) * 100);
-    Sprites::drawOverwrite(37, 59, Numbers, scoreTmp / 10);         scoreTmp = scoreTmp - ((scoreTmp / 10) * 10);
-    Sprites::drawOverwrite(41, 59, Numbers, scoreTmp);
+    ...
 
 }
 ```
+
+> Your Turn: <br/>
+> Add the two remaining lines that handle the tens and units column of the score.
 
 What does the test for the player’s location have to do with anything?
 

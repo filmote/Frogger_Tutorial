@@ -67,9 +67,28 @@ void loop() {
 
     }
 
+    if (arduboy.justPressed(DOWN_BUTTON)) {
+
+        switch (player.y) {
+            
+            case 26:        player.y = 32; break;
+            case 32:        player.y = 41; break;
+            case 41:        player.y = 50; break;
+            case 50:        player.y = 59; break;
+
+        }
+
+    }
+
     if (arduboy.justPressed(RIGHT_BUTTON) && player.x < 120) {
 
         player.x = player.x + 5;
+
+    }
+
+    if (arduboy.justPressed(LEFT_BUTTON) && player.x > 5) {
+
+        player.x = player.x - 5;
 
     }
 

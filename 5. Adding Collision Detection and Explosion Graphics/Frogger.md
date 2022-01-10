@@ -22,12 +22,7 @@ bool carCrash(Obstacle car) {
             break;
 
         case ObstacleType::Truck:
-            carRect.width = 17;
-            break;
-
-        case ObstacleType::Van:
-            carRect.width = 11;
-            break;
+            ...
 
         default: break;
             
@@ -37,6 +32,10 @@ bool carCrash(Obstacle car) {
 
 }
 ```
+
+> Your Turn <br/>
+> In the `carCrash()` function above, add to additional `case` statements to handle the `Truck` and `Van`.  These two vehciles are 17 and 11 pixels in length, respectively.
+
 
 Finally, any collision is detected between the two rectangles using the Arduboy libraries’ `collide()` function and the result returned as a true or false to the calling code. We can now detect for collisions between the frog and any car, simply be iterating through the car collection in the main `loop()`, as shown below:
 
@@ -143,6 +142,9 @@ Elsewhere in the code, you will see that checks are made to see if the `explodin
                 case 59:        player.y = 50; break;
                 ...
 ```
+
+> Your Turn: <br/>
+> Review the code and find all uses of the variable `explodingFrogCounter`.  Can you see where it is decremented at the start of the `loop()`, where it is used to prevent the player moving the frog in the middle of the explosion and where it is used when rendering the frog?
 
 Now we are getting somewhere!
 

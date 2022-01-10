@@ -57,7 +57,7 @@ Frog player;
 uint8_t explodingFrogCounter = 0;
 bool home[5] = { false, false, false, false, false };
 uint16_t score = 0;
-uint8_t title_count = 0;
+uint8_t titleCount = 0;
 uint8_t homeFullCounter = 0;
 
 Obstacle cars[NUMBER_OF_CARS];
@@ -104,14 +104,6 @@ void title_Loop() {
 
     Sprites::drawOverwrite(0, 0, Title, 0);
 
-    if (title_count <= 64) title_count++;
-
-    if (title_count > 64) {
-
-        Sprites::drawSelfMasked(90, 50, PressA, 0);
-
-    }
-
     if (arduboy.justPressed(A_BUTTON)) {
 
         gameMode = GameMode::Play;
@@ -130,7 +122,7 @@ void gameOver_Loop() {
     if (arduboy.justPressed(A_BUTTON)) {
 
         gameMode = GameMode::TitleScreen;
-        title_count = 0;
+        titleCount = 0;
         resetGame();
 
     }
@@ -641,6 +633,8 @@ void launchCar(Obstacle &car1, Obstacle &car2) {
 
     }
 
+    car1.type = static_cast<ObstacleType>(random(ObstacleType::Car, ObstacleType::Van + 1));
+
 }
 
 void moveWaterObstacles(Obstacle &obstacle1, Obstacle &obstacle2, int8_t increment) {
@@ -690,7 +684,7 @@ void launchWaterObstacles_Right(Obstacle &obstacle1, Obstacle &obstacle2) {
 
     if (obstacle2.x <0) {
 
-        obstacle1.x = random(obstacle2.x - 70, obstacle2.x -35);
+        obstacle1.x = random(obstacle2.x - 70, obstacle2.x - 25);
 
     }
     else {

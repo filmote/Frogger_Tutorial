@@ -36,13 +36,6 @@ void loop() {
     if ( !arduboy.nextFrame() ) return;
     arduboy.clear();
 
-
-    // Update the cars positions ..
-
-    for (uint8_t i = 0; i < NUMBER_OF_CARS; i++) {
-        moveCars(cars[i], -1);
-    }
-
     drawScreen();
     arduboy.display();
 
@@ -53,9 +46,6 @@ void resetGame() {
     cars[0] = { 130, 32, ObstacleType::Car };
     cars[1] = { 180, 32, ObstacleType::Truck };
     cars[2] = { 64, 41, ObstacleType::Truck };
-    cars[3] = { 110, 41, ObstacleType::Van };
-    cars[4] = { 45, 50, ObstacleType::Car };
-    cars[5] = { 70, 50, ObstacleType::Van };
 
 }
 
@@ -91,18 +81,6 @@ void drawCar(Obstacle car) {
     if (car.type == ObstacleType::Car) {
 
         Sprites::drawSelfMasked(car.x, car.y, Car_Small, 0);
-
-    }
-
-    if (car.type == ObstacleType::Truck) {
-
-        Sprites::drawSelfMasked(car.x, car.y, Car_Truck, 0);
-
-    }
-
-    if (car.type == ObstacleType::Van) {
-
-        Sprites::drawSelfMasked(car.x, car.y, Car_Van, 0);
 
     }
 

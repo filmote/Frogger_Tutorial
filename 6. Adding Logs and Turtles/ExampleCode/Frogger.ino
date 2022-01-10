@@ -41,7 +41,6 @@ Frog player;
 uint8_t explodingFrogCounter = 0;
 
 Obstacle cars[NUMBER_OF_CARS];
-Obstacle waterObstacles[NUMBER_OF_WATEROBSTACLES];
 
 void setup() {
   
@@ -152,15 +151,6 @@ void loop() {
 
         player.x--;
 
-    }
-
-
-    moveWaterObstacles(waterObstacles[2], waterObstacles[3], 1);
-
-    if (explodingFrogCounter == 0 && player.y == 13 && player.x < 124) {
-
-        player.x++;
-        
     }
 
 
@@ -397,6 +387,8 @@ void launchCar(Obstacle &car1, Obstacle &car2) {
 
     }
 
+    car1.type = static_cast<ObstacleType>(random(ObstacleType::Car, ObstacleType::Van + 1));
+
 }
 
 void moveWaterObstacles(Obstacle &obstacle1, Obstacle &obstacle2, int8_t increment) {
@@ -434,23 +426,6 @@ void launchWaterObstacles_Left(Obstacle &obstacle1, Obstacle &obstacle2) {
     else {
 
         obstacle1.x = random(130, 180);
-
-    }
-
-    obstacle1.type = static_cast<ObstacleType>( random(ObstacleType::FloatingLog, ObstacleType::Turtles + 1) );
-
-}
-
-void launchWaterObstacles_Right(Obstacle &obstacle1, Obstacle &obstacle2) {
-
-    if (obstacle2.x <0) {
-
-        obstacle1.x = random(obstacle2.x - 70, obstacle2.x -35);
-
-    }
-    else {
-
-        obstacle1.x = random(-70, -25);
 
     }
 

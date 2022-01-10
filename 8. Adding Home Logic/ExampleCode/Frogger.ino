@@ -150,21 +150,6 @@ void loop() {
                 player.reset();             
             }
 
-            else if (player.x >= 61 && player.x <= 63 && home[2] == false) {
-                home[2] = true;                    
-                player.reset();             
-            }
-
-            else if (player.x >= 86 && player.x <= 88 && home[3] == false) {
-                home[3] = true;                    
-                player.reset();            
-            }
-
-            else if (player.x >= 111 && player.x <= 113 && home[4] == false) {
-                home[4] = true;                    
-                player.reset();           
-            }
-
 
             // Have all the home places been filled?
 
@@ -532,6 +517,8 @@ void launchCar(Obstacle &car1, Obstacle &car2) {
 
     }
 
+    car1.type = static_cast<ObstacleType>(random(ObstacleType::Car, ObstacleType::Van + 1));
+
 }
 
 void moveWaterObstacles(Obstacle &obstacle1, Obstacle &obstacle2, int8_t increment) {
@@ -581,7 +568,7 @@ void launchWaterObstacles_Right(Obstacle &obstacle1, Obstacle &obstacle2) {
 
     if (obstacle2.x <0) {
 
-        obstacle1.x = random(obstacle2.x - 70, obstacle2.x -35);
+        obstacle1.x = random(obstacle2.x - 70, obstacle2.x - 25);
 
     }
     else {

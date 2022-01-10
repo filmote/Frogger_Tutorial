@@ -444,6 +444,8 @@ void launchCar(Obstacle &car1, Obstacle &car2) {
 
     }
 
+    car1.type = static_cast<ObstacleType>(random(ObstacleType::Car, ObstacleType::Van + 1));
+
 }
 
 void moveWaterObstacles(Obstacle &obstacle1, Obstacle &obstacle2, int8_t increment) {
@@ -485,7 +487,6 @@ void launchWaterObstacles_Left(Obstacle &obstacle1, Obstacle &obstacle2) {
     }
 
     obstacle1.type = static_cast<ObstacleType>( random(ObstacleType::FloatingLog, ObstacleType::Turtles + 1) );
-    obstacle1.delay = random(70, 150);
 
 }
 
@@ -493,7 +494,7 @@ void launchWaterObstacles_Right(Obstacle &obstacle1, Obstacle &obstacle2) {
 
     if (obstacle2.x <0) {
 
-        obstacle1.x = random(obstacle2.x - 70, obstacle2.x -35);
+        obstacle1.x = random(obstacle2.x - 70, obstacle2.x - 25);
 
     }
     else {
@@ -503,6 +504,5 @@ void launchWaterObstacles_Right(Obstacle &obstacle1, Obstacle &obstacle2) {
     }
 
     obstacle1.type = static_cast<ObstacleType>( random(ObstacleType::FloatingLog, ObstacleType::Turtles + 1) );
-    obstacle1.delay = random(70, 150);
 
 }

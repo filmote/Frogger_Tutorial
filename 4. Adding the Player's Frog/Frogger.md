@@ -85,9 +85,14 @@ The code uses a `switch` – which is similar to a bunch of if statements.  In t
     }        
 ```
 
-Implementing the down functionality is almost identical with the `y` value being increased to produce a downward motion.  You can review it in the code at your own leisure.
+Implementing the down functionality is almost identical with the `y` value being increased to produce a downward motion.  
 
-The horizontal movement is handled by the code shown below.  In addition to checking which button was pressed, we also check the frog’s existing `x` position to ensure that the player is not already on the far left or far right of the screen.  The last thing we want is for the frog to move out of view!
+
+> Your Turn: <br/>
+> Using the logic that handles the up button as a guide, add code immediately below it to handle the down button.  As the player is moving down the screen, the `y` value of the `player` struct must increase.
+
+
+The right movement is handled by the code shown below.  In addition to checking which button was pressed, we also check the frog’s existing `x` position to ensure that the player is not already on the far right of the screen.  The last thing we want is for the frog to move out of view!
 
 ```cpp
     if (arduboy.justPressed(RIGHT_BUTTON) && player.x < 120) {
@@ -95,13 +100,10 @@ The horizontal movement is handled by the code shown below.  In addition to chec
         player.x = player.x + 5;
 
     }
-
-    if (arduboy.justPressed(LEFT_BUTTON) && player.x > 5) {
-
-        player.x = player.x - 5;
-
-    }
 ```
+
+> Your Turn: <br/>
+> Add the logic for the left movement.  To avoid the playewr moving off the left hand side, ensure that the code prevents the `x` value from going below `0`.
 
 If all is OK, we move the player 5 pixels in either direction.
 

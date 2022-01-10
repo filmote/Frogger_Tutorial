@@ -14,12 +14,10 @@ enum ObstacleType {
 };
 ``` 
 
-A second array, similar to that used by the cars, has been added to track the six logs and turtles.  Note that both arrays are of the same type – our structure `Obstacle`.
+Using the existing `Obstacle` structure, we can create a second array similar to that used by the cars to track the six logs and turtles.  
 
-```cpp
-Obstacle cars[NUMBER_OF_CARS];
-Obstacle waterObstacles[NUMBER_OF_WATEROBJECTS];
-```
+> Your Turn: <br/>
+> Using the Add an array to hold the details of our logs and turtles.  You will see in the code, that there is a `#define NUMBER_OF_WATEROBSTACLES 6` constant defined at the top of the program which you can use in your declaration.
 
 The button press handling that moves the frog has also been updated.  You can see additional cases have been added to the up and down switches to handle the upper areas of the screen.
 
@@ -56,6 +54,11 @@ void moveWaterObstacles(Obstacle &object1, Obstacle &object2, int8_t increment) 
 }
 ```
 
+> Yiur Turn: <br/>
+> Review the `launchWaterObstacles_Left()` function and compate it to the original `launchCar()` function presented earlier.<br/>
+> Use the `launchWaterObstacles_Left()` function as a template for creating a new function, `launchWaterObstacles_Right()` which handles objects moving left to right. To ensure the objects are not visible when first relocated, chose an `x` value between `-25` and `-70`.
+
+
 The code below shows the movement of the logs and the automatic movement of the player if they happen to be sitting on one.  
 
 The function `moveWaterObstacles()`, like the equivalent `moveCars()` accepts two log or turtle references so that it can move both and reposition them relative to each other if needed.  It also accepts a third parameter which is the number of pixels to move the logs which can be a negative value – indicating a left movement – or a positive value – indicating a right movement.
@@ -73,14 +76,6 @@ if (explodingFrogCounter == 0 && player.y == 7 && player.x > 0) {
 
 }
 
-moveWaterObstacles(waterObstacles[2], waterObstacles[3], 1);
-
-if (explodingFrogCounter == 0 && player.y == 13 && player.x < 124) {
-
-    player.x++;
-    
-}
-
 if (arduboy.frameCount % 2 == 0) {
 
     moveWaterObstacles(waterObstacles[4], waterObstacles[5], -1);
@@ -95,6 +90,10 @@ if (arduboy.frameCount % 2 == 0) {
 ```
 
 You will notice in the above code that the same `frameCount` and `modulus` trick is used on the lowest pair of logs to have them move slower than the other lanes.  As you can tell, this is a common trick to have things move at different speeds to each other!
+
+> Your Turn: <br/>
+> The code above handles only the top and bottom row of water obstacles.  Add additinal code to handle the logs and turtles that move from left to right in the moddle lane.  For reference, the player will have an `x` value of `13` and should be prevented from moving any further right than `124`.
+
 
 Rather than detecting collisions with the water objects, we need to ensure that the frog is actually on top of them and not in the water.  You will notice that there is a new function, called `onWaterObstacle()`, that performs a similar function to the `carCrash()` function we used previously.  It uses the Arduboy library’s collide function to ensure that the frog is sitting on a log or turtles.
 

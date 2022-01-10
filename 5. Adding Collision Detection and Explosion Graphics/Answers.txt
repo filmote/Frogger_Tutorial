@@ -13,8 +13,8 @@ enum ObstacleType {
 
 struct Frog {
 
-    uint8_t x;
-    uint8_t y;
+    uint8_t x = 62;
+    uint8_t y = 59;
 
     void reset() {
 
@@ -34,6 +34,7 @@ struct Obstacle {
 
 Frog player;
 Obstacle cars[NUMBER_OF_CARS];
+uint8_t explodingFrogCounter = 0;
 
 void setup() {
   
@@ -52,24 +53,62 @@ void loop() {
     arduboy.pollButtons();
 
 
-    // Control the frog's movements ..
+    // Update exploding frog counter (if active) ..
 
-    if (arduboy.justPressed(UP_BUTTON)) {
+    if (arduboy.frameCount % 4 == 0 && explodingFrogCounter > 0) {
 
-        switch (player.y) {
-            
-            case 59:        player.y = 50; break;
-            case 50:        player.y = 41; break;
-            case 41:        player.y = 32; break;
-            case 32:        player.y = 26; break;
+        explodingFrogCounter--;
+
+        if (explodingFrogCounter == 0) {
+
+            player.reset();   
 
         }
 
     }
 
-    if (arduboy.justPressed(RIGHT_BUTTON) && player.x < 120) {
 
-        player.x = player.x + 5;
+    // Control the frog ..
+
+    if (explodingFrogCounter == 0) {
+            
+        if (arduboy.justPressed(UP_BUTTON)) {
+
+            switch (player.y) {
+                
+                case 59:        player.y = 50; break;
+                case 50:        player.y = 41; break;
+                case 41:        player.y = 32; break;
+                case 32:        player.y = 26; break;
+
+            }
+
+        }
+
+        if (arduboy.justPressed(DOWN_BUTTON)) {
+
+            switch (player.y) {
+                
+                case 26:        player.y = 32; break;
+                case 32:        player.y = 41; break;
+                case 41:        player.y = 50; break;
+                case 50:        player.y = 59; break;
+
+            }
+
+        }
+
+        if (arduboy.justPressed(RIGHT_BUTTON) && player.x < 120) {
+
+            player.x = player.x + 5;
+
+        }
+
+        if (arduboy.justPressed(LEFT_BUTTON) && player.x > 5) {
+
+            player.x = player.x - 5;
+
+        }
 
     }
 
@@ -90,13 +129,35 @@ void loop() {
 
     moveCars(cars[2], cars[3], -1);
 
+
+    // Has the frog collided with a car?
+
+    if (explodingFrogCounter == 0) {
+
+        for (uint8_t i = 0; i < 6; i++) {
+
+            if (carCrash(cars[i])) {
+
+                explodingFrogCounter = 7;
+
+            }
+
+        }
+
+    }
+
     drawScreen();
 
 
-    // Draw frog .. 
+    // Draw frog .. even if exploding!
 
-    Sprites::drawErase(player.x - 1, player.y - 1, FrogMask, 0);
-    Sprites::drawSelfMasked(player.x, player.y, FrogImage, 0);
+    if (explodingFrogCounter > 0) {
+        Sprites::drawSelfMasked(player.x - 10, player.y - 8, Frog_Exploding, explodingFrogCounter - 1);
+    }
+    else {
+        Sprites::drawErase(player.x - 1, player.y - 1, FrogMask, 0);
+        Sprites::drawSelfMasked(player.x, player.y, FrogImage, 0);
+    }
 
     arduboy.display();
 
@@ -112,14 +173,12 @@ void resetGame() {
     cars[5] = { 70, 50, ObstacleType::Van };
 
     player.reset();
+    explodingFrogCounter = 0;
 
 }
 
 void drawScreen() {
-
-
-    // Draw road, verge, etc ..
-
+  
     arduboy.drawLine(0, 26, 127, 26);
     arduboy.drawLine(0, 30, 127, 30);
     arduboy.drawLine(0, 57, 127, 57);
@@ -159,6 +218,33 @@ void drawCar(Obstacle car) {
         Sprites::drawSelfMasked(car.x, car.y, Car_Van, 0);
 
     }
+
+}
+
+bool carCrash(Obstacle car) {
+
+    Rect frogRect = { player.x, player.y, 4, 5 };
+    Rect carRect = { car.x, car.y, 0, 6 };
+
+    switch (car.type) {
+
+        case ObstacleType::Car:
+            carRect.width = 10;
+            break;
+
+        case ObstacleType::Truck:
+            carRect.width = 17;
+            break;
+
+        case ObstacleType::Van:
+            carRect.width = 11;
+            break;
+
+        default: break;
+            
+    }
+
+    return arduboy.collide(frogRect, carRect);
 
 }
 

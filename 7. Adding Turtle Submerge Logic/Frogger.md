@@ -27,14 +27,9 @@ When launching the water obstacle, we can now assign a random number to the new 
 
 Therefore, a random delay in the range of `70` to `150` provides enough time for the turtle to be above the water before it submerges.  You can play with this range and see how it affects the game if you like.
 
-```cpp
-void launchWaterObstacles_Left(Obstacle &obstacle1, Obstacle &obstacle2) {
 
-    ...
-    obstacle1.delay = random(70, 150);
-
-}
-```
+> Your Turn: <br/>
+> At the enod of the `launchWaterObstacles_Left()` and `launchWaterObstacles_Right()` functions, assign a random number between `50` and `100` to the new `delay` variable of the obstacle being relaunched.
 
 When rendering the turtles, we simple use the delay to determine whether the turtle is fully above, partially below or completely below the water.  
 

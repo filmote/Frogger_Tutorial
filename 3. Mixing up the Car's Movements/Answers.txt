@@ -11,19 +11,6 @@ enum ObstacleType {
     Van,
 };
 
-struct Frog {
-
-    uint8_t x;
-    uint8_t y;
-
-    void reset() {
-
-        x = 62;
-        y = 59;
-
-    }
-};
-
 struct Obstacle {
 
     int16_t x;
@@ -32,7 +19,6 @@ struct Obstacle {
 
 };
 
-Frog player;
 Obstacle cars[NUMBER_OF_CARS];
 
 void setup() {
@@ -52,28 +38,6 @@ void loop() {
     arduboy.pollButtons();
 
 
-    // Control the frog's movements ..
-
-    if (arduboy.justPressed(UP_BUTTON)) {
-
-        switch (player.y) {
-            
-            case 59:        player.y = 50; break;
-            case 50:        player.y = 41; break;
-            case 41:        player.y = 32; break;
-            case 32:        player.y = 26; break;
-
-        }
-
-    }
-
-    if (arduboy.justPressed(RIGHT_BUTTON) && player.x < 120) {
-
-        player.x = player.x + 5;
-
-    }
-
-
     // Update the cars positions ..
 
     if (arduboy.frameCount % 2 == 0) {
@@ -89,14 +53,7 @@ void loop() {
     }
 
     moveCars(cars[2], cars[3], -1);
-
     drawScreen();
-
-
-    // Draw frog .. 
-
-    Sprites::drawErase(player.x - 1, player.y - 1, FrogMask, 0);
-    Sprites::drawSelfMasked(player.x, player.y, FrogImage, 0);
 
     arduboy.display();
 
@@ -111,15 +68,13 @@ void resetGame() {
     cars[4] = { 45, 50, ObstacleType::Car };
     cars[5] = { 70, 50, ObstacleType::Van };
 
-    player.reset();
-
 }
 
 void drawScreen() {
 
 
     // Draw road, verge, etc ..
-
+  
     arduboy.drawLine(0, 26, 127, 26);
     arduboy.drawLine(0, 30, 127, 30);
     arduboy.drawLine(0, 57, 127, 57);
@@ -139,6 +94,7 @@ void drawScreen() {
     }
 
 }
+
 
 void drawCar(Obstacle car) {
 
@@ -185,6 +141,29 @@ void launchCar(Obstacle &car1, Obstacle &car2) {
 
     }
 
+    // Alternative 1.
+
     car1.type = static_cast<ObstacleType>(random(ObstacleType::Car, ObstacleType::Van + 1));
+    
+    // Alternative 2 ..
+
+    uint8_t typeToLaunch = random(0, 3);
+
+    switch (typeToLaunch) {
+
+        case 0:
+            car1.type = ObstacleType::Car;
+            break;
+
+        case 1:
+            car1.type = ObstacleType::Truck;
+            break;
+
+        case 2:
+            car1.type = ObstacleType::Van;
+            break;
+            
+    }
+
 
 }

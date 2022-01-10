@@ -26,6 +26,7 @@ struct Frog {
         y = 59;
 
     }
+    
 };
 
 struct Obstacle {
@@ -48,9 +49,6 @@ struct Obstacle {
 Frog player;
 
 uint8_t explodingFrogCounter = 0;
-bool home[5] = { false, false, false, false, false };
-uint16_t score = 0;
-uint8_t homeFullCounter = 0;
 
 Obstacle cars[NUMBER_OF_CARS];
 Obstacle waterObstacles[NUMBER_OF_WATEROBSTACLES];
@@ -100,97 +98,21 @@ void loop() {
     }
 
 
-    // Update homeFullCounter counter (if active) ..
+    // Control the frog ..
 
-    if (arduboy.frameCount % 4 == 0 && homeFullCounter > 0) {
-
-        homeFullCounter--;
-        score = score + 15;
-
-        if (homeFullCounter == 0) {
-
-            player.reset();   
-
-            for (uint8_t i = 0; i < 5; i++) {
-                home[i] = false;
-            }
-
-        }
-
-    }
-
-
-    // Control the frog's movements ..
-
-    if (explodingFrogCounter == 0 && homeFullCounter == 0) {
+    if (explodingFrogCounter == 0) {
             
         if (arduboy.justPressed(UP_BUTTON)) {
 
             switch (player.y) {
                 
-                case 59:        player.y = 50; score = score + 2; break;
-                case 50:        player.y = 41; score = score + 2; break;
-                case 41:        player.y = 32; score = score + 2; break;
-                case 32:        player.y = 26; score = score + 2; break;
-                case 26:        player.y = 19; score = score + 2; break;
-                case 19:        player.y = 13; score = score + 2; break;
-                case 13:        player.y = 7;  score = score + 2; break;
-
-            }
-
-        }
-
-        else if (arduboy.pressed(UP_BUTTON) && player.y == 7) {         
-
-            if (player.x >= 11 && player.x <= 13 && home[0] == false) {
-                home[0] = true;     
-                score = score + 50;   
-                player.reset();         
-            }
-
-            else if (player.x >= 36 && player.x <= 38 && home[1] == false) {
-                home[1] = true;                    
-                score = score + 50;               
-                player.reset();             
-            }
-
-            else if (player.x >= 61 && player.x <= 63 && home[2] == false) {
-                home[2] = true;                    
-                score = score + 50;               
-                player.reset();             
-            }
-
-            else if (player.x >= 86 && player.x <= 88 && home[3] == false) {
-                home[3] = true;                    
-                score = score + 50;               
-                player.reset();            
-            }
-
-            else if (player.x >= 111 && player.x <= 113 && home[4] == false) {
-                home[4] = true;                    
-                score = score + 50;               
-                player.reset();           
-            }
-
-
-            // Have all the home places been filled?
-
-            bool allFull = true;
-
-            for (uint8_t i = 0; i < 5; i++) {
-                
-                if (!home[i]) {
-
-                    allFull = false;
-                    break;
-
-                }
-
-            }
-
-            if (allFull) {
-
-                homeFullCounter = 20;
+                case 59:        player.y = 50; break;
+                case 50:        player.y = 41; break;
+                case 41:        player.y = 32; break;
+                case 32:        player.y = 26; break;
+                case 26:        player.y = 19; break;
+                case 19:        player.y = 13; break;
+                case 13:        player.y = 7;  break;
 
             }
 
@@ -249,7 +171,7 @@ void loop() {
     
     moveWaterObstacles(waterObstacles[0], waterObstacles[1], -1);
 
-    if (explodingFrogCounter == 0 && homeFullCounter == 0 && player.y == 7 && player.x > 0) {
+    if (explodingFrogCounter == 0 && player.y == 7 && player.x > 0) {
 
         player.x--;
 
@@ -258,7 +180,7 @@ void loop() {
 
     moveWaterObstacles(waterObstacles[2], waterObstacles[3], 1);
 
-    if (explodingFrogCounter == 0 && homeFullCounter == 0  && player.y == 13 && player.x < 124) {
+    if (explodingFrogCounter == 0 && player.y == 13 && player.x < 124) {
 
         player.x++;
         
@@ -269,7 +191,7 @@ void loop() {
 
         moveWaterObstacles(waterObstacles[4], waterObstacles[5], -1);
 
-        if (explodingFrogCounter == 0 && homeFullCounter == 0 && player.y == 19 && player.x > 0) {
+        if (explodingFrogCounter == 0 && player.y == 19 && player.x > 0) {
 
             player.x--;
             
@@ -280,7 +202,7 @@ void loop() {
 
     // Has the frog collided with a car or is drowning in the water?
 
-    if (explodingFrogCounter == 0 && homeFullCounter == 0) {
+    if (explodingFrogCounter == 0) {
 
         if (player.y > 19) {
 
@@ -288,7 +210,6 @@ void loop() {
 
                 if (carCrash(cars[i])) {
 
-                    player.lives--;
                     explodingFrogCounter = 7;
 
                 }
@@ -310,7 +231,6 @@ void loop() {
 
             if (!isOnALog) {
 
-                player.lives--;
                 explodingFrogCounter = 7;
 
             }
@@ -352,30 +272,14 @@ void resetGame() {
     waterObstacles[4] = { 32, 19, ObstacleType::FloatingLog, 0 };
     waterObstacles[5] = { 70, 19, ObstacleType::Turtles, 0 };
 
-    score = 0;
-    player.lives = 3;
     player.reset();
     explodingFrogCounter = 0;
-
-    for (uint8_t i = 0; i < 5; i++) {
-        home[i] = false;
-    }
 
 }
 
 void drawScreen() {
   
     Sprites::drawOverwrite(0, 0, Top, 0);
-
-    for (uint8_t i = 0; i < 5; i++) {
-
-        if (home[i] && (homeFullCounter == 0 || ((homeFullCounter - 1) % 5) == i)) {
-
-            Sprites::drawSelfMasked(12 + (i * 25), 0, FrogImage, 0);
-
-        }
-
-    }
 
     arduboy.drawLine(0, 26, 127, 26);
     arduboy.drawLine(0, 30, 127, 30);
@@ -404,33 +308,6 @@ void drawScreen() {
     drawWaterObstacle(waterObstacles[3], true);
     drawWaterObstacle(waterObstacles[4], false);
     drawWaterObstacle(waterObstacles[5], false);
-
-
-    // Render the score if the player is not close to it ..
-
-    if (player.y < 59 || player.x > 47) {
-
-        Sprites::drawOverwrite(0, 59, ScoreImg, 0);
-
-        uint16_t scoreTmp = score;
-        Sprites::drawOverwrite(25, 59, Numbers, scoreTmp / 10000);      scoreTmp = scoreTmp - ((scoreTmp / 10000) * 10000);
-        Sprites::drawOverwrite(29, 59, Numbers, scoreTmp / 1000);       scoreTmp = scoreTmp - ((scoreTmp / 1000) * 1000);
-        Sprites::drawOverwrite(33, 59, Numbers, scoreTmp / 100);        scoreTmp = scoreTmp - ((scoreTmp / 100) * 100);
-
-    }
-
-
-    // Render the number of lives left if the player is not close to it ..
-
-    if (player.y < 59 || player.x < 104) {
-
-        for (uint8_t i = 0; i < player.lives; i++) {
-
-            Sprites::drawOverwrite(124 - (i * 6), 59, FrogImage, 0);
-
-        }
-
-    }
 
 }
 

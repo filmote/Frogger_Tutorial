@@ -232,14 +232,6 @@ bool carCrash(Obstacle car) {
             carRect.width = 10;
             break;
 
-        case ObstacleType::Truck:
-            carRect.width = 17;
-            break;
-
-        case ObstacleType::Van:
-            carRect.width = 11;
-            break;
-
         default: break;
             
     }
@@ -270,5 +262,7 @@ void launchCar(Obstacle &car1, Obstacle &car2) {
         car1.x = random(130, 180);
 
     }
+
+    car1.type = static_cast<ObstacleType>(random(ObstacleType::Car, ObstacleType::Van + 1));
 
 }

@@ -112,14 +112,22 @@ void resetGame() {
     cars[0] = { 130, 32, ObstacleType::Car };
     cars[1] = { 180, 32, ObstacleType::Truck };
     cars[2] = { 64, 41, ObstacleType::Truck };
-    cars[3] = { 110, 41, ObstacleType::Van };
-    cars[4] = { 45, 50, ObstacleType::Car };
-    cars[5] = { 70, 50, ObstacleType::Van };
+    ...
 
 }
 ```
 
-As you can see, the six cars are individually populated using a notation called Brace Initialization.  In this format, the parameters of the structure are defined in a comma separated list in the **same order they are declared in the structure itself**.  Thus, for the first car in the array (index 0), the `x` value is set to `130`, the `y` value to `32` and the obstacle type to ‘Car’.
+
+    cars[3] = { 110, 41, ObstacleType::Van };
+    cars[4] = { 45, 50, ObstacleType::Car };
+    cars[5] = { 70, 50, ObstacleType::Van };
+
+
+As you can see, the cars are individually populated using a notation called Brace Initialization.  In this format, the parameters of the structure are defined in a comma separated list in the **same order they are declared in the structure itself**.  Thus, for the first car in the array (index 0), the `x` value is set to `130`, the `y` value to `32` and the obstacle type to ‘Car’.
+
+> Your Turn: <br/>
+> The `resetGame()` function has only specified the starting location for three of the six vehicles in game.  Add the remaining 3 vehicles at locations (110, 41), (45, 50) and (70, 50) and of types Van, Car and Van, respectively.
+
 
 We can now add a call to `resetGame()` into the default `setup()` function to ensure the cars are initialised.
 
@@ -154,20 +162,8 @@ void moveCars(Obstacle &car, int8_t increment) {
 
 We can then move the cars using the `moveCars()` function in our main `loop()` by calling the function consecutively for each car in the array.
 
-```cpp
-void loop() {
-    ...
-
-    // Update the cars positions ..
-
-    for (uint8_t i = 0; i < NUMBER_OF_CARS; i++) {
-        moveCars(cars[i], -1);
-    }
-
-    drawScreen();
-    ...
-}
-```
+> Your Turn: <br/>
+> In the main `loop()`, add some code that iterates through the array of cars.  For each car found, call the `moveCars()` function passing both the car and the increment to move the car each frame.  As we are moving from right to left, this should be a value of `-1`.
 
 
 ## Rendering the Cars Onscreen
@@ -185,20 +181,13 @@ void drawCar(Obstacle car) {
 
     }
 
-    if (car.type == ObstacleType::Truck) {
-
-        Sprites::drawSelfMasked(car.x, car.y, Car_Truck, 0);
-
-    }
-
-    if (car.type == ObstacleType::Van) {
-
-        Sprites::drawSelfMasked(car.x, car.y, Car_Van, 0);
-
-    }
-
+    ...
 }
 ```
+
+> Your Turn: <br/>
+> Add two additional if statements to handle the remaining two car types, Truck and Van.  Their image names are `Car_Truck` and `Car_Van` respectively.
+
 
 Now that we have a simple function that renders a single car, we can wrap this up into an overall function that renders the road sides, traffic lanes and all six cars.
 

@@ -84,4 +84,8 @@ void title_Loop() {
 
 Searching for `gameMode` in the code will reveal other points where it is updated.  
 
+> Your Turn: <br/>
+> If you played the completed game in section 1, you may have noticed a short time after the title screen is rendered that it then displays a 'Press A' prompt.  This code needs to be added to the `title_Loop()` function using the already declared `titleCount` variable.<br/>
+> Increment the `titleCount` variable until it reaches 64.  Once there, display the `PressA` image at location (90, 50).
+
 Congratulations!  You have built a version of **Frogger** and delved into a lot of sophisticated programming topics. 

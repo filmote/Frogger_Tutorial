@@ -6,6 +6,12 @@
 
 Arduboy2 arduboy;
 
+enum GameMode {
+    TitleScreen,
+    Play,
+    GameOver,
+};
+
 enum ObstacleType {
     Car,
     Truck,
@@ -45,11 +51,13 @@ struct Obstacle {
 
 };
 
+GameMode gameMode = GameMode::TitleScreen;
 Frog player;
 
 uint8_t explodingFrogCounter = 0;
 bool home[5] = { false, false, false, false, false };
 uint16_t score = 0;
+uint8_t titleCount = 0;
 uint8_t homeFullCounter = 0;
 
 Obstacle cars[NUMBER_OF_CARS];
@@ -71,8 +79,68 @@ void loop() {
     arduboy.clear();
     arduboy.pollButtons();
 
+    switch (gameMode) {
 
-    // Update turtle delay counters ..
+        case GameMode::TitleScreen:
+            title_Loop();
+            break;
+
+        case GameMode::Play:
+            game_Loop();
+            break;
+
+        case GameMode::GameOver:
+            gameOver_Loop();
+            break;
+            
+    }
+
+
+    arduboy.display();
+
+}
+
+void title_Loop() {
+
+    Sprites::drawOverwrite(0, 0, Title, 0);
+
+    if (titleCount < 64) titleCount++;
+
+    if (titleCount >= 64) {
+
+        Sprites::drawSelfMasked(90, 50, PressA, 0);
+
+    }
+
+    if (arduboy.justPressed(A_BUTTON)) {
+
+        gameMode = GameMode::Play;
+        resetGame();
+
+    }
+
+}
+
+void gameOver_Loop() {
+
+    drawScreen();
+
+    Sprites::drawExternalMask(39, 23, GameOver_Img, GameOver_Mask, 0, 0);
+
+    if (arduboy.justPressed(A_BUTTON)) {
+
+        gameMode = GameMode::TitleScreen;
+        titleCount = 0;
+        resetGame();
+
+    }
+
+}
+
+void game_Loop() {
+
+
+    // Update delays ..
 
     for (uint8_t i = 0; i < NUMBER_OF_WATEROBSTACLES; i++) {
         
@@ -95,12 +163,18 @@ void loop() {
 
             player.reset();   
 
+            if (player.lives == 0) {
+
+                gameMode = GameMode::GameOver;
+
+            }
+
         }
 
     }
 
 
-    // Update homeFullCounter counter (if active) ..
+    // Update exploding frog counter (if active) ..
 
     if (arduboy.frameCount % 4 == 0 && homeFullCounter > 0) {
 
@@ -332,8 +406,6 @@ void loop() {
         Sprites::drawSelfMasked(player.x, player.y, FrogImage, 0);
     }
 
-    arduboy.display();
-
 }
 
 void resetGame() {
@@ -416,6 +488,8 @@ void drawScreen() {
         Sprites::drawOverwrite(25, 59, Numbers, scoreTmp / 10000);      scoreTmp = scoreTmp - ((scoreTmp / 10000) * 10000);
         Sprites::drawOverwrite(29, 59, Numbers, scoreTmp / 1000);       scoreTmp = scoreTmp - ((scoreTmp / 1000) * 1000);
         Sprites::drawOverwrite(33, 59, Numbers, scoreTmp / 100);        scoreTmp = scoreTmp - ((scoreTmp / 100) * 100);
+        Sprites::drawOverwrite(37, 59, Numbers, scoreTmp / 10);         scoreTmp = scoreTmp - ((scoreTmp / 10) * 10);
+        Sprites::drawOverwrite(41, 59, Numbers, scoreTmp);
 
     }
 
